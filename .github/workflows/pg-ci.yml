@@ -1072,7 +1072,7 @@ jobs:
 
     defaults:
       run:
-        shell: 'd:\msys64\usr\bin\bash.exe --login -eo pipefail "{0}"'
+        shell: 'm:\msys64\usr\bin\bash.exe --login -eo pipefail "{0}"'
         #shell: msys2 {0}
 
     steps:
@@ -1113,10 +1113,13 @@ jobs:
       - name: download msys
         shell: bash
         run: |
+          mkdir "${RUNNER_TEMP}/mingw"
+          subst.exe m: "${RUNNER_TEMP}/mingw"
+          cd /m/
+
           curl -fsSL -o msys64.tar.zst https://github.com/anarazel/pg-vm-images/releases/latest/download/msys64-full.tar.zst
-          cd /d/
           ls -lh
-          zstd -dcf "${{github.workspace}}/msys64.tar.zst" | tar -xf -
+          zstd -dcf "msys64.tar.zst" | tar -xf -
           ls -lh
 
       - name: test msys
@@ -1125,7 +1128,7 @@ jobs:
           where.exe cpan || true
           where.exe perl538.dll || true
           perl --version
-          ldd d:/msys64/ucrt64/bin/perl
+          ldd m:/msys64/ucrt64/bin/perl
           perl -mIPC::Run -e 1
 
       - *nix_sysinfo_step
