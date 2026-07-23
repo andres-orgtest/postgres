@@ -371,15 +371,15 @@ jobs:
           steps.ccache-restore-branch.conclusion == 'success'
         run: python3 src/tools/ci/gha_ccache_decide.py
 
-      - &ccache_save_step
-        name: "ccache: Upload cache"
-        uses: actions/cache/save@v5
-        if: |
-          always() &&
-          steps.ccache-decide.outputs.should_save == 'true'
-        with:
-          path: ${{ env.CCACHE_DIR }}
-          key: ${{ steps.ccache-restore-branch.outputs.cache-primary-key }}
+      # - &ccache_save_step
+      #   name: "ccache: Upload cache"
+      #   uses: actions/cache/save@v5
+      #   if: |
+      #     always() &&
+      #     steps.ccache-decide.outputs.should_save == 'true'
+      #   with:
+      #     path: ${{ env.CCACHE_DIR }}
+      #     key: ${{ steps.ccache-restore-branch.outputs.cache-primary-key }}
 
       # Run a minimal set of tests. The main regression tests take too long
       # for this purpose. For now this is a random quick pg_regress style
@@ -515,7 +515,7 @@ jobs:
           make -s -j$(nproc) world-bin
 
       - *ccache_decide_save_step
-      - *ccache_save_step
+      # - *ccache_save_step
 
       - name: Test world
         shell: *su_postgres_shell
@@ -577,7 +577,7 @@ jobs:
         run: *ninja_build_cmd
 
       - *ccache_decide_save_step
-      - *ccache_save_step
+      # - *ccache_save_step
 
       - name: Test world
         shell: *su_postgres_shell
@@ -665,7 +665,7 @@ jobs:
         run: *ninja_build_cmd
 
       - *ccache_decide_save_step
-      - *ccache_save_step
+      # - *ccache_save_step
 
       - name: Test world
         shell: *su_postgres_shell
@@ -817,7 +817,7 @@ jobs:
         run: *ninja_build_cmd
 
       - *ccache_decide_save_step
-      - *ccache_save_step
+      # - *ccache_save_step
 
       - name: Test world
         env:
@@ -1148,7 +1148,7 @@ jobs:
         run: *ninja_build_cmd
 
       - *ccache_decide_save_step
-      - *ccache_save_step
+      # - *ccache_save_step
 
       - name: Test world
         run: *meson_test_world_cmd
@@ -1283,5 +1283,5 @@ jobs:
             EXTRAFLAGS='-fmax-errors=10'
 
       - *ccache_decide_save_step
-      - *ccache_save_step
+      # - *ccache_save_step
       - *upload_logs_step
