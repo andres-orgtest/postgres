@@ -109,8 +109,13 @@ env:
   # Centrally define the version of linux runners, to make it easier to
   # update. We don't just want to use ubuntu-latest, as it's not implausible
   # there will be breakage when that switches to the next ubuntu version.
+  #   ubicloud-standard-2   ->  2 vCPU /  8 GB
+  #   ubicloud-standard-4   ->  4 vCPU / 16 GB
+  #   ubicloud-standard-8   ->  8 vCPU / 32 GB
+  #   ubicloud-standard-16  -> 16 vCPU / 64 GB
+  #   ubicloud-standard-30  -> 30 vCPU / 120 GB
   _LINUX_RUNS_ON: &linux_runs_on |
-    ubuntu-24.04
+    ubicloud-standard-4
 
   # Debian Trixie containers used by all Linux jobs. Built by
   # 'https://github.com/anarazel/pg-vm-images/'.
